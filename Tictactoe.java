@@ -1,5 +1,6 @@
 
 import java.util.*;
+import java.lang.*;
 
 
 public class Tictactoe{
@@ -10,44 +11,48 @@ public class Tictactoe{
 
     //HashMap<Integer, String> playerMatrixMap1 = new HashMap<>();
     //playerMatrixMap1.put(-1, "X");
+    String winnerPlayer ="";
 
  
     public static void main(String[] args)
     {
-    Tictactoe a = new Tictactoe();
-    Scanner scan = new Scanner(System.in);
-    System.out.print("Enter Grid Size: ");
-    int size = scan.nextInt();
-    System.out.print("Enter the number of players: ");
-    int players = scan.nextInt();
-    Map<Integer, String> playerMatrixMap = new HashMap<>();
-    playerMatrixMap.put(-1, "X");
-    playerMatrixMap.put(1, "O");
-    playerMatrixMap.put(-2, "A");
-    playerMatrixMap.put(2, "B");
-    playerMatrixMap.put(-3, "C");
-    playerMatrixMap.put(3, "D");
-    playerMatrixMap.put(-4, "E");
-    playerMatrixMap.put(4, "F");
-    playerMatrixMap.put(-5, "G");
-    playerMatrixMap.put(5, "H");
-    playerMatrixMap.put(-6, "I");
-    playerMatrixMap.put(6, "J");
-    playerMatrixMap.put(-7, "K");
-    playerMatrixMap.put(7, "L");
-    playerMatrixMap.put(-8, "M");
-    playerMatrixMap.put(8, "N");
-    playerMatrixMap.put(-9, "P");
-    playerMatrixMap.put(9, "Q");
-    playerMatrixMap.put(-10, "R");
-    playerMatrixMap.put(10, "S");
-    playerMatrixMap.put(-11, "T");
-    playerMatrixMap.put(11, "U");
-    playerMatrixMap.put(-12, "V");
-    playerMatrixMap.put(12, "W");
-    playerMatrixMap.put(-13, "Y");
-    playerMatrixMap.put(13, "Z");
+        Tictactoe a = new Tictactoe();
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter the size of the grid: ");
+        int size = scan.nextInt();
+        System.out.print("Enter the number of players: ");
+        int players = scan.nextInt();
+        Map<Integer, String> playerMatrixMap = new HashMap<>();
+        playerMatrixMap.put(-1, "X");
+        playerMatrixMap.put(1, "O");
+        playerMatrixMap.put(-2, "A");
+        playerMatrixMap.put(2, "B");
+        playerMatrixMap.put(-3, "C");
+        playerMatrixMap.put(3, "D");
+        playerMatrixMap.put(-4, "E");
+        playerMatrixMap.put(4, "F");
+        playerMatrixMap.put(-5, "G");
+        playerMatrixMap.put(5, "H");
+        playerMatrixMap.put(-6, "I");
+        playerMatrixMap.put(6, "J");
+        playerMatrixMap.put(-7, "K");
+        playerMatrixMap.put(7, "L");
+        playerMatrixMap.put(-8, "M");
+        playerMatrixMap.put(8, "N");
+        playerMatrixMap.put(-9, "P");
+        playerMatrixMap.put(9, "Q");
+        playerMatrixMap.put(-10, "R");
+        playerMatrixMap.put(10, "S");
+        playerMatrixMap.put(-11, "T");
+        playerMatrixMap.put(11, "U");
+        playerMatrixMap.put(-12, "V");
+        playerMatrixMap.put(12, "W");
+        playerMatrixMap.put(-13, "Y");
+        playerMatrixMap.put(13, "Z");
+        
 
+        System.out.print("Please Enter the Win Sequence: ");
+        int winSeq = scan.nextInt();
 
 
 
@@ -65,7 +70,7 @@ public class Tictactoe{
     a.createGrid(size,matrixValues,playerMatrixMap);
     System.out.println();
 
-    
+    //to be removed later on
     for (int i=0; i<size; i++){
         for(int j=0;j<size;j++){
             
@@ -73,21 +78,48 @@ public class Tictactoe{
         }
         System.out.println();
     }
-    
-    a.runGame(size, matrixValues,players,playerMatrixMap);
+    //to be removed later on
+
+
+
+
+    a.runGame(size, matrixValues,players,playerMatrixMap,winSeq);
     
     }
 
 
 
-public void runGame(int size, int[][] matrixValues,int players, Map<Integer, String> playerMatrixMap){
+public void runGame(int size, int[][] matrixValues,int players, Map<Integer, String> playerMatrixMap,int winSeq){
 
-        while(true){
+        int MatrixSize =size;
+        Boolean checkWinCondition = false;
+        while(checkWinCondition==false){
         takeInput(matrixValues);
         createGrid(size,matrixValues,playerMatrixMap);
         incrementPlayerTurn(players);
-        }
+        //to be removed later on
+        for (int i=0; i<size; i++){
+            for(int j=0;j<size;j++){
         
+            System.out.print(matrixValues[i][j] + "\t");
+            }
+            System.out.println();
+        }
+        //to be removed later on
+
+        checkWinCondition=checkWin(winSeq, matrixValues, MatrixSize,playerMatrixMap);
+        }
+        if (checkWinCondition==true)
+        {
+            System.out.println("Player " + winnerPlayer + " has won. Congrats!");
+
+        }
+        else 
+        {
+            System.out.println("Sadly no one won. Its a Tie!");
+            System.exit(0);
+        }
+
 
 }
 
@@ -95,9 +127,9 @@ public void takeInput(int[][] matrixValues){
 
     Scanner sc = new Scanner(System.in);
     String tempPlayerChar = getPlayerChar(getPlayerTurn());
-    System.out.print("Player (" + tempPlayerChar + ") enter the position of play: ");
-    int row = sc.nextInt()-1;
-    int column = sc.nextInt()-1;
+    System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
+    int row = Integer.parseInt(sc.next())-1;
+    int column = Integer.parseInt(sc.next())-1;
     matrixValues[row][column]=getPlayerInt(getPlayerTurn());
     System.out.print("\033\143");
     
@@ -281,7 +313,104 @@ public void incrementPlayerTurn(int players)
     }
 }
 
+public Boolean checkWin(int winSeq,int[][] matrixValues, int MatrixSize,Map<Integer, String> playerMatrixMap)
+{
 
+    Boolean verticalReturn = vertical(MatrixSize, matrixValues, winSeq, playerMatrixMap);
+
+    if(verticalReturn==true)
+    {
+        return true;
+    }
+   // Boolean horizontalReturn = horizontal(MatrixSize, matrixValues, winSeq, playerMatrixMap);
+
+    else if (verticalReturn==false)
+    {
+        Boolean horizontalReturn = horizontal(MatrixSize, matrixValues, winSeq, playerMatrixMap);
+        if(horizontalReturn==true)
+        {
+            return true;
+        }
+    }
+    
+   return false;
+
+}
+
+public Boolean vertical(int MatrixSize, int[][] matrixValues,int winSeq, Map<Integer, String> playerMatrixMap)
+{
+    int counterForWinCheckVertical = 0;
+    //String winnerPlayer ="";
+    System.out.println("in vertical");
+    for (int i=0;i<MatrixSize;i++)
+    {
+        for (int j=0;j<MatrixSize;j++)
+        {
+            
+            if(j!=MatrixSize-1)
+            {
+                if (matrixValues[j][i]==matrixValues[j+1][i] && matrixValues[j][i]!=0 /* && matrixValues[j][i+1]!=0 */)
+                {
+                    counterForWinCheckVertical++;
+                    if (counterForWinCheckVertical==(winSeq-1))
+                    {
+                        winnerPlayer=playerMatrixMap.get(matrixValues[j][i]);
+                        System.out.print(winnerPlayer); //to be deleted later
+                        System.out.print(counterForWinCheckVertical); //to be deleted later
+                        return true;
+                    }
+                
+
+                }
+            }
+            
+        }
+        counterForWinCheckVertical =0;
+    }
+    System.out.println(counterForWinCheckVertical);
+    return false;
+
+}
+
+public Boolean horizontal(int MatrixSize, int[][] matrixValues,int winSeq, Map<Integer, String> playerMatrixMap)
+{
+    int counterForWinCheck = 0;
+    //String winnerPlayer ="";
+    System.out.println("in horizontal");
+    for (int i=0;i<MatrixSize;i++)
+    {
+        for (int j=0;j<MatrixSize;j++)
+        {
+
+            if (j!=MatrixSize-1)
+            {
+                if (matrixValues[i][j]==matrixValues[i][j+1] && matrixValues[i][j]!=0 /* && matrixValues[j][i+1]!=0 */)
+                {
+                    counterForWinCheck++;
+                    if (counterForWinCheck==(winSeq-1))
+                    {
+                        winnerPlayer=playerMatrixMap.get(matrixValues[i][j]);
+                        System.out.print(winnerPlayer);
+                        return true;
+                    }
+                
+
+                }
+            }
+            
+
+        }
+        counterForWinCheck =0;
+    }
+    System.out.print(counterForWinCheck);
+    return false;
+    
+}
+
+public void diagonal()
+{
+
+}
 
 }
 
