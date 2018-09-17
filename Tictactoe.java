@@ -5,8 +5,8 @@ import java.lang.*;
 
 public class Tictactoe{
 
-    private String[] playerChar = {"X","O","A","B","C"};
-    private int[] playerInt = {-1,1,-2,2,-3,3};
+    private String[] playerChar = {"X","O","A","B","C","E","F","G","H","I","J","K","L","M","N","P","Q","R","S","T","U","V","W","Y","Z"};
+    private int[] playerInt = {-1,1,-2,2,-3,3,-4,4,-5,5,-6,6,-7,7,-8,8,-9,9,-10,10,-11,11,-12,12,-13,13};
     private int playerTurn =0;
 
     //HashMap<Integer, String> playerMatrixMap1 = new HashMap<>();
@@ -331,7 +331,16 @@ public Boolean checkWin(int winSeq,int[][] matrixValues, int MatrixSize,Map<Inte
         {
             return true;
         }
+        else if(horizontalReturn==false){
+            Boolean diagonalRightReturn = diagonalright(MatrixSize, matrixValues, winSeq, playerMatrixMap);
+            if (diagonalRightReturn==true)
+            {  
+                return true;
+            }
+        }
+        
     }
+    
     
    return false;
 
@@ -407,9 +416,68 @@ public Boolean horizontal(int MatrixSize, int[][] matrixValues,int winSeq, Map<I
     
 }
 
-public void diagonal()
+public Boolean diagonalright(int MatrixSize, int[][] matrixValues,int winSeq, Map<Integer, String> playerMatrixMap)
 {
+    int counterForWinCheckForDiagonal = 0;
+    //String winnerPlayer ="";
+    System.out.println("in Diagonal top to bottom");
 
+    for (int i=MatrixSize-2;i>=0;i--)
+    {
+        int row=i;
+        int column=0;
+        for(row = i; row<=MatrixSize-1 ;row++){
+
+            System.out.println(row + " " + column);
+            if(row!=MatrixSize-1){
+                if (matrixValues[row][column]==matrixValues[row+1][column+1] && matrixValues[row][column]!=0 /* && matrixValues[j][i+1]!=0 */)
+                    {
+                        counterForWinCheckForDiagonal++;
+                        if (counterForWinCheckForDiagonal==(winSeq-1))
+                        {
+                            winnerPlayer=playerMatrixMap.get(matrixValues[row][column]);
+                            System.out.print(winnerPlayer);
+                            return true;
+                        }
+                
+
+                    }
+                column ++;
+            }
+        }
+        counterForWinCheckForDiagonal =0;
+    }
+//----------------<-------------------------------------------------------------------------------------
+    for (int i=1;i<MatrixSize-1;i++)
+    {
+        int row=0;
+        int column=i;
+        for(column = i; column<=MatrixSize-1 ;column++){
+
+            System.out.println(row + " " + column);
+            if(column!=MatrixSize-1){
+                if (matrixValues[row][column]==matrixValues[row+1][column+1] && matrixValues[row][column]!=0 /* && matrixValues[j][i+1]!=0 */)
+                    {
+                        counterForWinCheckForDiagonal++;
+                        if (counterForWinCheckForDiagonal==(winSeq-1))
+                        {
+                            winnerPlayer=playerMatrixMap.get(matrixValues[row][column]);
+                            System.out.print(winnerPlayer);
+                            return true;
+                        }
+                
+
+                    }
+                row ++;
+            }
+        }
+        counterForWinCheckForDiagonal =0;
+    }
+    
+
+
+    System.out.print(counterForWinCheckForDiagonal);
+    return false;
 }
 
 }
