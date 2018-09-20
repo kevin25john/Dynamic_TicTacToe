@@ -114,7 +114,7 @@ public void runGame(int size, int[][] matrixValues,int players, Map<Integer, Str
         int MatrixSize =size;
         Boolean checkWinCondition = false;
         while(checkWinCondition==false){
-        takeInput(matrixValues);
+        takeInput(matrixValues, size);
         createGrid(size,matrixValues,playerMatrixMap);
         incrementPlayerTurn(players);
         // //to be removed later on
@@ -143,14 +143,23 @@ public void runGame(int size, int[][] matrixValues,int players, Map<Integer, Str
 
 }
 
-public void takeInput(int[][] matrixValues){
+public void takeInput(int[][] matrixValues , int MatrixSize){
 
     Scanner sc = new Scanner(System.in);
     String tempPlayerChar = getPlayerChar(getPlayerTurn());
     System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
+    while(!sc.hasNextInt()) {
+        // if(sc.nextLine() =="Q" || sc.nextLine() =="q")
+        // {
+        //     System.exit(0);
+        // }
+        sc.next();
+        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
+    }
+
     int row = Integer.parseInt(sc.next())-1;
     int column = Integer.parseInt(sc.next())-1;
-    while(matrixValues[row][column]!=0 || matrixValues[row][column]>0)
+    while(matrixValues[row][column]!=0 || matrixValues[row][column]>0 || row > MatrixSize || column > MatrixSize)
     {
         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
         row = Integer.parseInt(sc.next())-1;
