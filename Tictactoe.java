@@ -788,7 +788,6 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
         createGrid(size,matrixValues,playerMatrixMap);
         System.out.println();
         runGame(size, matrixValues,players,playerMatrixMap,winSeq);
-
 }
 
 }
