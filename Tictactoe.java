@@ -690,7 +690,10 @@ public void save(int size, int winSeq, int players , int[][] matrixValues) throw
             //fw.write("\n");
         builder.append("\n");
     }
-
+    while(new File(file+".txt").exists()){
+        System.out.print("File already Exists, Please reenter name of file: ");
+        file = sc.nextLine();
+    }
     BufferedWriter writer = new BufferedWriter(new FileWriter(file+ ".txt"));
     writer.write(builder.toString());
     writer.close();
@@ -751,21 +754,32 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
 
     System.out.print("enter name of file: ");
     Scanner sc = new Scanner(System.in);
-        String file1 = sc.nextLine();
+    
+    String file1 = sc.nextLine();
         //String savedGameFile = /*...*/;
-        //int[][] board = new int[9][9];
-        BufferedReader reader = new BufferedReader(new FileReader(file1 +".txt"));
-        String line = "";
-        int row = 0;
+            //int[][] board = new int[9][9];
+    BufferedReader reader = null;
+    FileReader fr = null;
+    //fr = new FileReader(file1 + ".txt");
+    while(!new File(file1+".txt").exists()){
+    System.out.print("enter name of file: ");
+    file1 = sc.nextLine();
+    //fr = new FileReader(file1+".txt");
+    }
+    fr = new FileReader(file1+".txt");
+    reader = new BufferedReader(fr);
+    
+    String line = "";
+    int row = 0;
         //int sizeNew=0;
         //int newWinSeq=0;
         //int newPlayer=0;
-        size = Integer.parseInt(reader.readLine());
-        winSeq = Integer.parseInt(reader.readLine());
-        players = Integer.parseInt(reader.readLine());
-        int[][] matrixValues = new int[size][size];
-        while((line = reader.readLine()) != null)
-        {   
+    size = Integer.parseInt(reader.readLine());
+    winSeq = Integer.parseInt(reader.readLine());
+    players = Integer.parseInt(reader.readLine());
+    int[][] matrixValues = new int[size][size];
+    while((line = reader.readLine()) != null)
+    {   
             //String[] cola = line.split("");
             //int col1=0;
             //int row1=0;
@@ -773,21 +787,21 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
             //     sizeNew = Integer.parseInt(b);
             // }
 
-            String[] cols = line.split(","); //note that if you have used space as separator you have to split on " "
-            int col = 0;
+        String[] cols = line.split(","); //note that if you have used space as separator you have to split on " "
+        int col = 0;
             
-            for(String  c : cols)   
-            {
-                matrixValues[row][col] = Integer.parseInt(c);
-                col++;
-            }
-            row++;
+        for(String  c : cols)   
+        {
+            matrixValues[row][col] = Integer.parseInt(c);
+            col++;
         }
-        reader.close();
+        row++;
+    }
+    reader.close();
 
-        createGrid(size,matrixValues,playerMatrixMap);
-        System.out.println();
-        runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+    createGrid(size,matrixValues,playerMatrixMap);
+    System.out.println();
+    runGame(size, matrixValues,players,playerMatrixMap,winSeq);
 }
 
 }
