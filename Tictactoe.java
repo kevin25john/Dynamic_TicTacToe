@@ -23,8 +23,12 @@ public class Tictactoe{
             scan.next();
             System.out.print("Please Enter the Size of grid in number: " );
         }
-        
         int size = scan.nextInt();
+
+        while(size<=0){
+            System.out.print("Please Enter the Size of grid in number: " );
+            size = scan.nextInt();
+        }
 
         System.out.print("Enter the number of players: ");
         while(!scan.hasNextInt()) {
@@ -32,6 +36,7 @@ public class Tictactoe{
             System.out.print("Please Enter the number of players in number: " );
         }
         int players = scan.nextInt();
+        
         Map<Integer, String> playerMatrixMap = new HashMap<>();
         playerMatrixMap.put(1, "X");
         playerMatrixMap.put(2, "O");
@@ -81,6 +86,10 @@ public class Tictactoe{
             System.out.print("Please Enter the Win Sequence in Number format: " );
         }
         int winSeq = scan.nextInt();
+        while(winSeq>size || winSeq ==0){
+            System.out.print("Please Enter the correct Win Sequence: " );
+            winSeq = scan.nextInt();
+        }
 
         int[][] matrixValues = new int[size][size];
         for (int i=0; i<size; i++){
@@ -147,21 +156,26 @@ public void takeInput(int[][] matrixValues , int MatrixSize){
 
     Scanner sc = new Scanner(System.in);
     String tempPlayerChar = getPlayerChar(getPlayerTurn());
-    System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
-    while(!sc.hasNextInt()) {
-        // if(sc.nextLine() =="Q" || sc.nextLine() =="q")
-        // {
-        //     System.exit(0);
-        // }
-        sc.next();
-        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
-    }
+    System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+    
+    while(!sc.hasNextInt()){
+        if(sc.hasNext("q") || sc.hasNext("Q")) {
+        
+            System.out.print("bye");
+            System.exit(0);
+            
+            // sc.next();
+            // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
+        }
 
+        sc.next();
+        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+    }
     int row = Integer.parseInt(sc.next())-1;
     int column = Integer.parseInt(sc.next())-1;
     while(matrixValues[row][column]!=0 || matrixValues[row][column]>0 || row > MatrixSize || column > MatrixSize)
     {
-        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
+        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
         row = Integer.parseInt(sc.next())-1;
         column = Integer.parseInt(sc.next())-1;
     }
@@ -628,6 +642,10 @@ public Boolean diagonalLeft(int MatrixSize, int[][] matrixValues, int winSeq, Ma
     //System.out.print(counterForWinCheckForDiagonalLeft);
     return false;
     
+}
+
+public void quit(){
+
 }
 
 }
