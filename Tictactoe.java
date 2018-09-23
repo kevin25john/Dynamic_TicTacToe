@@ -1,7 +1,7 @@
 
 import java.util.*;
 import java.lang.*;
-
+import java.io.*;
 
 public class Tictactoe{
 
@@ -14,29 +14,13 @@ public class Tictactoe{
     String winnerPlayer ="";
 
  
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         Tictactoe a = new Tictactoe();
         Scanner scan = new Scanner(System.in);
-        System.out.print("Enter the size of the grid: ");
-        while(!scan.hasNextInt()) {
-            scan.next();
-            System.out.print("Please Enter the Size of grid in number: " );
-        }
-        int size = scan.nextInt();
-
-        while(size<=0){
-            System.out.print("Please Enter the Size of grid in number: " );
-            size = scan.nextInt();
-        }
-
-        System.out.print("Enter the number of players: ");
-        while(!scan.hasNextInt()) {
-            scan.next();
-            System.out.print("Please Enter the number of players in number: " );
-        }
-        int players = scan.nextInt();
-        
+        int size = 0;
+        int players = 0;
+        int winSeq = 0;
         Map<Integer, String> playerMatrixMap = new HashMap<>();
         playerMatrixMap.put(1, "X");
         playerMatrixMap.put(2, "O");
@@ -65,41 +49,41 @@ public class Tictactoe{
         playerMatrixMap.put(25, "Y");
         playerMatrixMap.put(26, "Z");
         
-        //int winSeq =0;
-        // System.out.print("Please Enter the Win Sequence: ");
-        // if(scan.hasNextInt()){
-        //     winSeq = scan.nextInt();
-        // }
-        // else {
-        //     System.out.print("Please enter a number.");
-        // }
+        //int[][] matrixValues;
 
-        // try {
-        //     System.out.print("Please Enter the Win Sequence: ");
-        //     int winSeq = Integer.parseInt();
-        // } catch (Exception e) {
-        //     //TODO: handle exception
-        // }
-        System.out.print("Please Enter the Win Sequence: ");
-        while(!scan.hasNextInt()) {
+
+
+        System.out.print("Do you want to resume a saved game ? (Y/N) ");
+        while(!scan.hasNext()){
             scan.next();
-            System.out.print("Please Enter the Win Sequence in Number format: " );
-        }
-        int winSeq = scan.nextInt();
-        while(winSeq>size || winSeq ==0){
-            System.out.print("Please Enter the correct Win Sequence: " );
-            winSeq = scan.nextInt();
+            System.out.print("Do you want to resume a saved game ? (Y/N) ");
         }
 
-        int[][] matrixValues = new int[size][size];
-        for (int i=0; i<size; i++){
-            for(int j=0;j<size;j++){
-                matrixValues[i][j]=0;
+        while(scan.hasNext()){
+            if(scan.hasNext("Y") || scan.hasNext("y"))
+            {
+                a.resumeGame(size, players, winSeq, playerMatrixMap);;
+                //save(size, winSeq, players, matrixValues);
+                System.exit(0);
+            
+            }
+            else if( scan.hasNext("N") || scan.hasNext("n"))
+            {
+                a.newGame(size, winSeq, players, playerMatrixMap);
+
+                
+            }
+            else
+            {
+                scan.next();
+                System.out.print("Do you want to resume a saved the game ? (Y/N) ");
             }
         }
-    
-        a.createGrid(size,matrixValues,playerMatrixMap);
-        System.out.println();
+
+        
+        
+        
+        
 
         // //to be removed later on
         // for (int i=0; i<size; i++){
@@ -110,20 +94,17 @@ public class Tictactoe{
         //     System.out.println();
         // }
         // //to be removed later on
-
-
-        a.runGame(size, matrixValues,players,playerMatrixMap,winSeq);
-    
+        
     }
 
 
 
-public void runGame(int size, int[][] matrixValues,int players, Map<Integer, String> playerMatrixMap,int winSeq){
+public void runGame(int size, int[][] matrixValues,int players, Map<Integer, String> playerMatrixMap,int winSeq) throws Exception{
 
         int MatrixSize =size;
         Boolean checkWinCondition = false;
         while(checkWinCondition==false){
-        takeInput(matrixValues, size);
+        takeInput(matrixValues, size, winSeq, players);
         createGrid(size,matrixValues,playerMatrixMap);
         incrementPlayerTurn(players);
         // //to be removed later on
@@ -152,7 +133,7 @@ public void runGame(int size, int[][] matrixValues,int players, Map<Integer, Str
 
 }
 
-public void takeInput(int[][] matrixValues , int MatrixSize){
+public void takeInput(int[][] matrixValues , int size, int winSeq, int players) throws Exception{
 
     Scanner sc = new Scanner(System.in);
     String tempPlayerChar = getPlayerChar(getPlayerTurn());
@@ -160,9 +141,9 @@ public void takeInput(int[][] matrixValues , int MatrixSize){
     
     while(!sc.hasNextInt()){
         if(sc.hasNext("q") || sc.hasNext("Q")) {
-        
-            System.out.print("bye");
-            System.exit(0);
+            quit(size, winSeq, players, matrixValues);
+            //System.out.print("bye");
+            //System.exit(0);
             
             // sc.next();
             // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
@@ -171,9 +152,10 @@ public void takeInput(int[][] matrixValues , int MatrixSize){
         sc.next();
         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
     }
+    
     int row = Integer.parseInt(sc.next())-1;
     int column = Integer.parseInt(sc.next())-1;
-    while(matrixValues[row][column]!=0 || matrixValues[row][column]>0 || row > MatrixSize || column > MatrixSize)
+    while(matrixValues[row][column]!=0 || matrixValues[row][column]>0 || row > size || column > size)
     {
         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
         row = Integer.parseInt(sc.next())-1;
@@ -644,7 +626,168 @@ public Boolean diagonalLeft(int MatrixSize, int[][] matrixValues, int winSeq, Ma
     
 }
 
-public void quit(){
+public void quit(int size, int winSeq, int players , int[][] matrixValues) throws Exception{
+
+
+    System.out.print("Do you want to save the Game ? (Y/N) ");
+    Scanner quitScan = new Scanner(System.in);
+    while(!quitScan.hasNext()){
+        quitScan.next();
+        System.out.print("Do you want to save the Game ? (Y/N) ");
+    }
+    while(quitScan.hasNext())
+    {
+        if(quitScan.hasNext("Y") || quitScan.hasNext("y"))
+        {
+            save(size, winSeq, players, matrixValues);
+            System.exit(0);
+            
+        }
+        else if( quitScan.hasNext("N") || quitScan.hasNext("n"))
+        {
+            System.exit(0);
+        }
+        else
+        {
+            quitScan.next();
+            System.out.print("Do you want to save the Game ? (Y/N) ");
+        }
+    }
+    
+
+
+
+    
+}
+
+public void save(int size, int winSeq, int players , int[][] matrixValues) throws Exception{
+    System.out.print("enter name of file: ");
+    Scanner sc = new Scanner(System.in);
+    String file = sc.nextLine();
+        //FileWriter fw = new FileWriter(file + ".txt");
+        //String strs[] = { "com", "exe", "doc" };
+    StringBuilder builder = new StringBuilder();
+
+    builder.append(size +"");
+    //builder.append(":");
+    builder.append("\n");
+    builder.append(winSeq +"");
+    builder.append("\n");
+    builder.append(players +"");
+    builder.append("\n");
+
+
+    for (int i = 0; i < size; i++) {
+        for(int j=0;j<size;j++){
+            builder.append(matrixValues[i][j]+"");
+            if(j < size - 1){
+                builder.append(",");
+            }
+                //fw.write(matrixValues[i][j]+",");
+                    
+                //matrixValues[i][j]=0;
+        }
+            //fw.write("\n");
+        builder.append("\n");
+    }
+
+    BufferedWriter writer = new BufferedWriter(new FileWriter(file+ ".txt"));
+    writer.write(builder.toString());
+    writer.close();
+}
+
+
+public void newGame(int size, int winSeq, int players, Map<Integer, String> playerMatrixMap)throws Exception{
+
+    Scanner scan = new Scanner(System.in);
+
+    System.out.print("Enter the size of the grid: ");
+    while(!scan.hasNextInt()) {
+        scan.next();
+        System.out.print("Please Enter the Size of grid in number: " );
+    }
+    size = scan.nextInt();
+
+    while(size<=0){
+        System.out.print("Please Enter the Size of grid in number: " );
+        size = scan.nextInt();
+    }
+
+    System.out.print("Enter the number of players: ");
+    while(!scan.hasNextInt()) {
+        scan.next();
+        System.out.print("Please Enter the number of players in number: " );
+    }
+    players = scan.nextInt();
+    System.out.print("Please Enter the Win Sequence: ");
+    while(!scan.hasNextInt()) {
+        scan.next();
+        System.out.print("Please Enter the Win Sequence in Number format: " );
+    }
+    winSeq = scan.nextInt();
+    while(winSeq>size || winSeq ==0){
+        System.out.print("Please Enter the correct Win Sequence: " );
+        winSeq = scan.nextInt();
+    }
+    int[][] matrixValues = new int[size][size];
+                
+    for (int i=0; i<size; i++){
+        for(int j=0;j<size;j++){
+            matrixValues[i][j]=0;
+        }
+    }
+
+    createGrid(size,matrixValues,playerMatrixMap);
+    System.out.println();
+    runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+
+
+
+}
+
+
+public void resumeGame(int size, int players, int winSeq, Map<Integer, String> playerMatrixMap) throws Exception{
+
+
+    System.out.print("enter name of file: ");
+    Scanner sc = new Scanner(System.in);
+        String file1 = sc.nextLine();
+        //String savedGameFile = /*...*/;
+        //int[][] board = new int[9][9];
+        BufferedReader reader = new BufferedReader(new FileReader(file1 +".txt"));
+        String line = "";
+        int row = 0;
+        //int sizeNew=0;
+        //int newWinSeq=0;
+        //int newPlayer=0;
+        size = Integer.parseInt(reader.readLine());
+        winSeq = Integer.parseInt(reader.readLine());
+        players = Integer.parseInt(reader.readLine());
+        int[][] matrixValues = new int[size][size];
+        while((line = reader.readLine()) != null)
+        {   
+            //String[] cola = line.split("");
+            //int col1=0;
+            //int row1=0;
+            // for(String b : cola){
+            //     sizeNew = Integer.parseInt(b);
+            // }
+
+            String[] cols = line.split(","); //note that if you have used space as separator you have to split on " "
+            int col = 0;
+            
+            for(String  c : cols)   
+            {
+                matrixValues[row][col] = Integer.parseInt(c);
+                col++;
+            }
+            row++;
+        }
+        reader.close();
+
+        createGrid(size,matrixValues,playerMatrixMap);
+        System.out.println();
+        runGame(size, matrixValues,players,playerMatrixMap,winSeq);
 
 }
 
