@@ -155,7 +155,14 @@ public void takeInput(int[][] matrixValues , int size, int winSeq, int players) 
     
     int row = Integer.parseInt(sc.next())-1;
     int column = Integer.parseInt(sc.next())-1;
-    while(matrixValues[row][column]!=0 || matrixValues[row][column]>0 || row > size || column > size)
+
+    while(row+1 > size || column+1 > size){
+        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+        row = Integer.parseInt(sc.next())-1;
+        column = Integer.parseInt(sc.next())-1;
+    }
+
+    while(matrixValues[row][column]!=0 || matrixValues[row][column]>0)
     {
         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
         row = Integer.parseInt(sc.next())-1;
