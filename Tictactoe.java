@@ -121,10 +121,13 @@ public void runGame(int size, int[][] matrixValues,int players, Map<Integer, Str
         }
         if (checkWinCondition==true)
         {
+            System.out.println();
             System.out.println("Player " + winnerPlayer + " has won. Congrats!");
+            System.out.println();
+            System.exit(0);
 
         }
-        else 
+        else
         {
             System.out.println("Sadly no one won. Its a Tie!");
             System.exit(0);
@@ -424,6 +427,7 @@ public Boolean checkWin(int winSeq,int[][] matrixValues, int MatrixSize,Map<Inte
         }
         
     }
+
     int counterFill =0;
     for(int i=0;i<MatrixSize;i++){
         for (int j=0;j<MatrixSize;j++){
@@ -437,6 +441,7 @@ public Boolean checkWin(int winSeq,int[][] matrixValues, int MatrixSize,Map<Inte
         System.out.println("Sadly no one won. Its a Tie!");
         System.out.println();
         System.exit(0);
+        return false;
     }
     
    return false;
