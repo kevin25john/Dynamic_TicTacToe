@@ -104,7 +104,7 @@ public void runGame(int size, int[][] matrixValues,int players, Map<Integer, Str
         int MatrixSize =size;
         Boolean checkWinCondition = false;
         while(checkWinCondition==false){
-        takeInput(matrixValues, size, winSeq, players);
+        takeInput(matrixValues, size, winSeq, players, playerMatrixMap);
         createGrid(size,matrixValues,playerMatrixMap);
         incrementPlayerTurn(players);
         // //to be removed later on
@@ -133,7 +133,7 @@ public void runGame(int size, int[][] matrixValues,int players, Map<Integer, Str
 
 }
 
-public void takeInput(int[][] matrixValues , int size, int winSeq, int players) throws Exception{
+public void takeInput(int[][] matrixValues , int size, int winSeq, int players, Map<Integer, String> playerMatrixMap) throws Exception{
 
     Scanner sc = new Scanner(System.in);
     String tempPlayerChar = getPlayerChar(getPlayerTurn());
@@ -149,25 +149,64 @@ public void takeInput(int[][] matrixValues , int size, int winSeq, int players) 
             // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
         }
 
-        sc.next();
-        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+        // sc.next();
+        // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+        //takeInput(matrixValues, size, winSeq, players);
+        runGame(size, matrixValues,players,playerMatrixMap,winSeq);
     }
+    // if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
+    //     quit(size, winSeq, players, matrixValues);
+    //     }
+    // while(!sc.hasNextInt()){
+    //     if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
+    //         quit(size, winSeq, players, matrixValues);
+    //     }
+    //     else{
+    //         sc.next();
+    //         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+    //     }
+        
+    // }
+    
     
     int row = Integer.parseInt(sc.next())-1;
     int column = Integer.parseInt(sc.next())-1;
 
     while(row+1 > size || column+1 > size){
-        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-        row = Integer.parseInt(sc.next())-1;
-        column = Integer.parseInt(sc.next())-1;
+        runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+        // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+        // row = Integer.parseInt(sc.next())-1;
+        // column = Integer.parseInt(sc.next())-1;
     }
-
+    // while(!sc.hasNextInt()){
+    //     if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
+    //         quit(size, winSeq, players, matrixValues);
+    //     }
+    //     else{
+    //         sc.next();
+    //         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+    //     }
+        
+    // }
+    //quitCheck(size, winSeq, players, matrixValues, tempPlayerChar);
     while(matrixValues[row][column]!=0 || matrixValues[row][column]>0)
     {
-        System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-        row = Integer.parseInt(sc.next())-1;
-        column = Integer.parseInt(sc.next())-1;
+        runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+        // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+        // row = Integer.parseInt(sc.next())-1;
+        // column = Integer.parseInt(sc.next())-1;
     }
+    // while(!sc.hasNextInt()){
+    //     if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
+    //         quit(size, winSeq, players, matrixValues);
+    //     }
+    //     else{
+    //         sc.next();
+    //         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+    //     }
+        
+    // }
+    //quitCheck(size, winSeq, players, matrixValues, tempPlayerChar);
     matrixValues[row][column]=getPlayerInt(getPlayerTurn());
     System.out.print("\033\143");
     
@@ -809,6 +848,30 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
     createGrid(size,matrixValues,playerMatrixMap);
     System.out.println();
     runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+}
+
+public Boolean quitCheck(int size, int winSeq, int players, int[][] matrixValues, String tempPlayerChar) throws Exception{
+    Scanner sc = new Scanner(System.in);
+    //while(!sc.hasNextInt()){
+        if(sc.hasNext("q") || sc.hasNext("Q")) {
+            //quit(size, winSeq, players, matrixValues);
+            return true;
+            //System.out.print("bye");
+            //System.exit(0);
+            
+            // sc.next();
+            // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
+        }
+        else{
+            return false;
+        }
+            //return false;
+
+        //sc.next();
+        //System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
+        
+    //}
+    //return false;
 }
 
 }
