@@ -171,11 +171,22 @@ public void takeInput(int[][] matrixValues , int size, int winSeq, int players, 
         
     // }
     
+    int row =0;//Integer.parseInt(sc.next())-1;
+    int column =0;// Integer.parseInt(sc.next())-1;
     
-    int row = Integer.parseInt(sc.next())-1;
-    int column = Integer.parseInt(sc.next())-1;
+    
+    row =Integer.parseInt(sc.next())-1;
+    column = Integer.parseInt(sc.next())-1;
+    // while (sc.hasNextInt()){
+    //     row = Integer.parseInt(sc.next())-1;
+    // }
+    // while(sc.hasNextInt()){
+    //     column = Integer.parseInt(sc.next())-1;
 
-    while(row+1 > size || column+1 > size){
+    // }
+    
+
+    while(row+1 > size || column+1 > size || row<0 || column<0){
         runGame(size, matrixValues,players,playerMatrixMap,winSeq);
         // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
         // row = Integer.parseInt(sc.next())-1;
