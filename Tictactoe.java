@@ -21,7 +21,7 @@ public class Tictactoe{
         int size = 0;
         int players = 0;
         int winSeq = 0;
-        Map<Integer, String> playerMatrixMap = new HashMap<>();
+        Map<Integer, String> playerMatrixMap = new HashMap<>(); //https://www.geeksforgeeks.org/java-util-hashmap-in-java/
         playerMatrixMap.put(1, "X");
         playerMatrixMap.put(2, "O");
         playerMatrixMap.put(3, "A");
@@ -58,11 +58,12 @@ public class Tictactoe{
             scan.next();
             System.out.print("Do you want to resume a saved game ? (Y/N) ");
         }
+        
 
         while(scan.hasNext()){
             if(scan.hasNext("Y") || scan.hasNext("y"))
             {
-                a.resumeGame(size, players, winSeq, playerMatrixMap);;
+                a.resumeGame(size, players, winSeq, playerMatrixMap);
                 //save(size, winSeq, players, matrixValues);
                 System.exit(0);
             
@@ -79,6 +80,7 @@ public class Tictactoe{
                 System.out.print("Do you want to resume a saved the game ? (Y/N) ");
             }
         }
+        System.out.println();
 
         
         
@@ -171,12 +173,23 @@ public void takeInput(int[][] matrixValues , int size, int winSeq, int players, 
         
     // }
     
+
+    // while(!sc.hasNextInt() || !sc.hasNextInt()){
+    //     runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+    // }
     int row =0;//Integer.parseInt(sc.next())-1;
     int column =0;// Integer.parseInt(sc.next())-1;
     
+    try{
+        row =Integer.parseInt(sc.next())-1;
+        column = Integer.parseInt(sc.next())-1;
+    }
+    catch(NumberFormatException e){
+        runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+    }
     
-    row =Integer.parseInt(sc.next())-1;
-    column = Integer.parseInt(sc.next())-1;
+    // row =Integer.parseInt(sc.next())-1;
+    // column = Integer.parseInt(sc.next())-1;
     // while (sc.hasNextInt()){
     //     row = Integer.parseInt(sc.next())-1;
     // }
@@ -722,7 +735,7 @@ public void quit(int size, int winSeq, int players , int[][] matrixValues) throw
     
 }
 
-public void save(int size, int winSeq, int players , int[][] matrixValues) throws Exception{
+public void save(int size, int winSeq, int players , int[][] matrixValues) throws Exception{ //https://stackoverflow.com/questions/34958829/how-to-save-a-2d-array-into-a-text-file-with-bufferedwriter
     System.out.print("enter name of file: ");
     Scanner sc = new Scanner(System.in);
     String file = sc.nextLine();
@@ -760,40 +773,67 @@ public void save(int size, int winSeq, int players , int[][] matrixValues) throw
     writer.write(builder.toString());
     writer.close();
 }
-
+public static boolean between(int i, int minValueInclusive, int maxValueInclusive) { //Reference : https://alvinalexander.com/java/java-method-integer-is-between-a-range
+    if (i >= minValueInclusive && i <= maxValueInclusive)
+        return true;
+    else
+        return false;
+}
 
 public void newGame(int size, int winSeq, int players, Map<Integer, String> playerMatrixMap)throws Exception{
 
     Scanner scan = new Scanner(System.in);
-
-    System.out.print("Enter the size of the grid: ");
-    while(!scan.hasNextInt()) {
-        scan.next();
-        System.out.print("Please Enter the Size of grid in number: " );
+    Boolean flag = false;
+    System.out.print("Enter the size of the grid in single numeric entry: ");
+    while((flag =!scan.hasNextInt()) || !between(size = scan.nextInt(),0,999)) {
+        
+        if(flag){
+            scan.next();
+            flag = false;
+        }
+        //scan.next();
+        System.out.print("Please re-enter the correct Size of grid in single numeric entry: " );
     }
-    size = scan.nextInt();
-
-    while(size<=0){
-        System.out.print("Please Enter the Size of grid in number: " );
-        size = scan.nextInt();
-    }
+    //size = scan.nextInt();
+    // while(size<=0 || size >999){
+    //     System.out.print("Please Enter the Size of grid in number: " );
+    //     size = scan.nextInt();
+    // }
+    System.out.println();
 
     System.out.print("Enter the number of players: ");
-    while(!scan.hasNextInt()) {
-        scan.next();
-        System.out.print("Please Enter the number of players in number: " );
+    while((flag =!scan.hasNextInt()) || !between(players = scan.nextInt(),1,26)) {
+        if(flag){
+            scan.next();
+            flag = false;
+        }
+        //scan.next();
+        System.out.print("Please Re-enter the correct number of players: " );
     }
-    players = scan.nextInt();
+    //players = scan.nextInt();
+    // while(players<1 || players >26){
+    //     scan.next();
+    //     System.out.print("Please Enter the number of players in number: " );
+    //     players = scan.nextInt();
+    // }
+    System.out.println();
+
     System.out.print("Please Enter the Win Sequence: ");
-    while(!scan.hasNextInt()) {
-        scan.next();
-        System.out.print("Please Enter the Win Sequence in Number format: " );
+    while((flag =!scan.hasNextInt()) || !between(winSeq = scan.nextInt(),1,size)) {
+        if(flag){
+            scan.next();
+            flag = false;
+        }
+        //scan.next();
+        System.out.print("Please Re-enter the correct Win Sequence: " );
     }
-    winSeq = scan.nextInt();
-    while(winSeq>size || winSeq ==0){
-        System.out.print("Please Enter the correct Win Sequence: " );
-        winSeq = scan.nextInt();
-    }
+    //winSeq = scan.nextInt();
+    // while(winSeq>size || winSeq <=0 ){
+    //     System.out.print("Please Enter the correct Win Sequence: " );
+    //     winSeq = scan.nextInt();
+    // }
+
+    System.out.println();
     int[][] matrixValues = new int[size][size];
                 
     for (int i=0; i<size; i++){
@@ -811,7 +851,7 @@ public void newGame(int size, int winSeq, int players, Map<Integer, String> play
 }
 
 
-public void resumeGame(int size, int players, int winSeq, Map<Integer, String> playerMatrixMap) throws Exception{
+public void resumeGame(int size, int players, int winSeq, Map<Integer, String> playerMatrixMap) throws Exception{ //https://stackoverflow.com/questions/34958829/how-to-save-a-2d-array-into-a-text-file-with-bufferedwriter
 
 
     System.out.print("enter name of file: ");
@@ -824,7 +864,7 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
     FileReader fr = null;
     //fr = new FileReader(file1 + ".txt");
     while(!new File(file1+".txt").exists()){
-    System.out.print("enter name of file: ");
+    System.out.print("File does not exist. Please re-enter name of file: ");
     file1 = sc.nextLine();
     //fr = new FileReader(file1+".txt");
     }
