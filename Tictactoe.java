@@ -500,7 +500,8 @@ public Boolean vertical(int MatrixSize, int[][] matrixValues,int winSeq, Map<Int
                 
 
                 }
-                else{
+                else
+                {
                     counterForWinCheckVertical = 0;
                 }
             }
