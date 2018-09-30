@@ -537,11 +537,11 @@ public Boolean horizontal(int MatrixSize, int[][] matrixValues,int winSeq, Map<I
                 
 
                 }
-            }
-            else{
-                counterForWinCheck = 0;
-            }
-            
+                else
+                {
+                    counterForWinCheck = 0;
+                }
+            }     
 
         }
         counterForWinCheck =0;
