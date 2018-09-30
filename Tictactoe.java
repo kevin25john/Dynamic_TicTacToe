@@ -766,10 +766,36 @@ public void save(int size, int winSeq, int players , int[][] matrixValues) throw
             //fw.write("\n");
         builder.append("\n");
     }
+    
+    Scanner scan = new Scanner(System.in);
+
     while(new File(file+".txt").exists()){
-        System.out.print("File already Exists, Please reenter name of file: ");
-        file = sc.nextLine();
+
+        System.out.print("Do You want to overWrite the file?: ");
+        //String ovr = sc.nextLine();
+
+        if(sc.hasNext("Y") || sc.hasNext("y") ){
+            //file = sc.nextLine();
+            sc.next();
+            break;
+        }
+        else if(sc.hasNext("N") || sc.hasNext("n") ){
+            sc.next();
+            System.out.print("Please Re-enter the file name: ");
+            file = scan.nextLine();
+            // if(new File(file+".txt").exists()){
+            //     continue;
+            // }
+            // else{break;}
+        }
+        // else{
+        //     continue;
+        // }
+
+        // System.out.print("File already Exists, Please reenter name of file: ");
+        // file = sc.nextLine();
     }
+    //System.out.print("done");
     BufferedWriter writer = new BufferedWriter(new FileWriter(file+ ".txt"));
     writer.write(builder.toString());
     writer.close();
@@ -786,7 +812,7 @@ public void newGame(int size, int winSeq, int players, Map<Integer, String> play
     Scanner scan = new Scanner(System.in);
     Boolean flag = false;
     System.out.print("Enter the size of the grid in single numeric entry: ");
-    while((flag =!scan.hasNextInt()) || !between(size = scan.nextInt(),0,999)) {
+    while((flag =!scan.hasNextInt()) || !between(size = scan.nextInt(),2,999)) {
         
         if(flag){
             scan.next();
@@ -820,7 +846,7 @@ public void newGame(int size, int winSeq, int players, Map<Integer, String> play
     System.out.println();
 
     System.out.print("Please Enter the Win Sequence: ");
-    while((flag =!scan.hasNextInt()) || !between(winSeq = scan.nextInt(),1,size)) {
+    while((flag =!scan.hasNextInt()) || !between(winSeq = scan.nextInt(),2,size)) {
         if(flag){
             scan.next();
             flag = false;
@@ -871,18 +897,18 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
     }
     fr = new FileReader(file1+".txt");
     reader = new BufferedReader(fr);
-    
-    String line = "";
-    int row = 0;
+    try{
+        String line = "";
+        int row = 0;
         //int sizeNew=0;
         //int newWinSeq=0;
         //int newPlayer=0;
-    size = Integer.parseInt(reader.readLine());
-    winSeq = Integer.parseInt(reader.readLine());
-    players = Integer.parseInt(reader.readLine());
-    int[][] matrixValues = new int[size][size];
-    while((line = reader.readLine()) != null)
-    {   
+        size = Integer.parseInt(reader.readLine());
+        winSeq = Integer.parseInt(reader.readLine());
+        players = Integer.parseInt(reader.readLine());
+        int[][] matrixValues = new int[size][size];
+        while((line = reader.readLine()) != null)
+        {   
             //String[] cola = line.split("");
             //int col1=0;
             //int row1=0;
@@ -890,21 +916,26 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
             //     sizeNew = Integer.parseInt(b);
             // }
 
-        String[] cols = line.split(","); //note that if you have used space as separator you have to split on " "
-        int col = 0;
+            String[] cols = line.split(","); //note that if you have used space as separator you have to split on " "
+            int col = 0;
             
-        for(String  c : cols)   
-        {
-            matrixValues[row][col] = Integer.parseInt(c);
-            col++;
+            for(String  c : cols)   
+            {
+                matrixValues[row][col] = Integer.parseInt(c);
+                col++;
+            }
+            row++;
         }
-        row++;
-    }
-    reader.close();
+        reader.close();
 
-    createGrid(size,matrixValues,playerMatrixMap);
-    System.out.println();
-    runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+        createGrid(size,matrixValues,playerMatrixMap);
+        System.out.println();
+        runGame(size, matrixValues,players,playerMatrixMap,winSeq);
+    }
+    catch(NumberFormatException e){
+        resumeGame(size,players,winSeq, playerMatrixMap);
+    }
+    
 }
 
 public Boolean quitCheck(int size, int winSeq, int players, int[][] matrixValues, String tempPlayerChar) throws Exception{
@@ -933,6 +964,32 @@ public Boolean quitCheck(int size, int winSeq, int players, int[][] matrixValues
 
 }
 
+/*
+System.out.print("Do you want to overwrite the Existing File?(Y/N) ");
+        while(!sc.hasNext()){
+            System.out.print("Do you want to overwrite the Existing File?(Y/N) ");
+            sc.next();
+        }
+         while(sc.hasNext())
+        {
+            if(sc.hasNext("Y") || sc.hasNext("y"))
+            {
+                break;
+            
+            }
+            else if( sc.hasNext("N") || sc.hasNext("n"))
+            {
+                System.out.print("Please reenter name of file: ");
+                //sc.next();
+                file = sc.nextLine();
+            }
+            else
+            {
+                System.out.print("Please reenter name of file: ");
+                //sc.next();
+                file = sc.nextLine();
+            }
+        }*/
 
 
 
