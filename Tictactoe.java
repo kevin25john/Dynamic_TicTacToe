@@ -9,8 +9,6 @@ public class Tictactoe{
     private int[] playerInt = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26};
     private int playerTurn =0;
 
-    //HashMap<Integer, String> playerMatrixMap1 = new HashMap<>();
-    //playerMatrixMap1.put(-1, "X");
     String winnerPlayer ="";
 
  
@@ -48,10 +46,6 @@ public class Tictactoe{
         playerMatrixMap.put(24, "W");
         playerMatrixMap.put(25, "Y");
         playerMatrixMap.put(26, "Z");
-        
-        //int[][] matrixValues;
-
-
 
         System.out.print("Do you want to resume a saved game ? (Y/N) ");
         while(!scan.hasNext()){
@@ -59,12 +53,10 @@ public class Tictactoe{
             System.out.print("Do you want to resume a saved game ? (Y/N) ");
         }
         
-
         while(scan.hasNext()){
             if(scan.hasNext("Y") || scan.hasNext("y"))
             {
                 a.resumeGame(size, players, winSeq, playerMatrixMap);
-                //save(size, winSeq, players, matrixValues);
                 System.exit(0);
             
             }
@@ -80,23 +72,7 @@ public class Tictactoe{
                 System.out.print("Do you want to resume a saved the game ? (Y/N) ");
             }
         }
-        System.out.println();
-
-        
-        
-        
-        
-
-        // //to be removed later on
-        // for (int i=0; i<size; i++){
-        //     for(int j=0;j<size;j++){
-            
-        //         System.out.print(matrixValues[i][j] + "\t");
-        //     }
-        //     System.out.println();
-        // }
-        // //to be removed later on
-        
+        System.out.println();   
     }
 
 
@@ -109,16 +85,7 @@ public void runGame(int size, int[][] matrixValues,int players, Map<Integer, Str
         takeInput(matrixValues, size, winSeq, players, playerMatrixMap);
         createGrid(size,matrixValues,playerMatrixMap);
         incrementPlayerTurn(players);
-        // //to be removed later on
-        // for (int i=0; i<size; i++){
-        //     for(int j=0;j<size;j++){
         
-        //     System.out.print(matrixValues[i][j] + "\t");
-        //     }
-        //     System.out.println();
-        // }
-        // //to be removed later on
-
         checkWinCondition=checkWin(winSeq, matrixValues, MatrixSize,playerMatrixMap);
         }
         if (checkWinCondition==true)
@@ -147,38 +114,12 @@ public void takeInput(int[][] matrixValues , int size, int winSeq, int players, 
     while(!sc.hasNextInt()){
         if(sc.hasNext("q") || sc.hasNext("Q")) {
             quit(size, winSeq, players, matrixValues);
-            //System.out.print("bye");
-            //System.exit(0);
-            
-            // sc.next();
-            // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
-        }
+            }
 
-        // sc.next();
-        // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-        //takeInput(matrixValues, size, winSeq, players);
         runGame(size, matrixValues,players,playerMatrixMap,winSeq);
     }
-    // if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
-    //     quit(size, winSeq, players, matrixValues);
-    //     }
-    // while(!sc.hasNextInt()){
-    //     if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
-    //         quit(size, winSeq, players, matrixValues);
-    //     }
-    //     else{
-    //         sc.next();
-    //         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-    //     }
-        
-    // }
-    
-
-    // while(!sc.hasNextInt() || !sc.hasNextInt()){
-    //     runGame(size, matrixValues,players,playerMatrixMap,winSeq);
-    // }
-    int row =0;//Integer.parseInt(sc.next())-1;
-    int column =0;// Integer.parseInt(sc.next())-1;
+    int row =0;
+    int column =0;
     
     try{
         row =Integer.parseInt(sc.next())-1;
@@ -188,52 +129,16 @@ public void takeInput(int[][] matrixValues , int size, int winSeq, int players, 
         runGame(size, matrixValues,players,playerMatrixMap,winSeq);
     }
     
-    // row =Integer.parseInt(sc.next())-1;
-    // column = Integer.parseInt(sc.next())-1;
-    // while (sc.hasNextInt()){
-    //     row = Integer.parseInt(sc.next())-1;
-    // }
-    // while(sc.hasNextInt()){
-    //     column = Integer.parseInt(sc.next())-1;
-
-    // }
     
-
     while(row+1 > size || column+1 > size || row<0 || column<0){
         runGame(size, matrixValues,players,playerMatrixMap,winSeq);
-        // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-        // row = Integer.parseInt(sc.next())-1;
-        // column = Integer.parseInt(sc.next())-1;
     }
-    // while(!sc.hasNextInt()){
-    //     if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
-    //         quit(size, winSeq, players, matrixValues);
-    //     }
-    //     else{
-    //         sc.next();
-    //         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-    //     }
-        
-    // }
-    //quitCheck(size, winSeq, players, matrixValues, tempPlayerChar);
+    
     while(matrixValues[row][column]!=0 || matrixValues[row][column]>0)
     {
         runGame(size, matrixValues,players,playerMatrixMap,winSeq);
-        // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-        // row = Integer.parseInt(sc.next())-1;
-        // column = Integer.parseInt(sc.next())-1;
-    }
-    // while(!sc.hasNextInt()){
-    //     if (quitCheck(size, winSeq, players, matrixValues, tempPlayerChar) ==true){
-    //         quit(size, winSeq, players, matrixValues);
-    //     }
-    //     else{
-    //         sc.next();
-    //         System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-    //     }
         
-    // }
-    //quitCheck(size, winSeq, players, matrixValues, tempPlayerChar);
+    }
     matrixValues[row][column]=getPlayerInt(getPlayerTurn());
     System.out.print("\033\143");
     
@@ -244,7 +149,6 @@ public void takeInput(int[][] matrixValues , int size, int winSeq, int players, 
 public void createGrid (int MatrixSize, int[][] matrixValues,Map<Integer,String> playerMatrixMap){
 
     int row = MatrixSize;
-    //System.out.print(" ");
     if (MatrixSize>=10 && MatrixSize<100){
         System.out.print(" ");
 
@@ -332,12 +236,6 @@ public void createRow(int MatrixSize, int l, int[][] matrixValues, Map<Integer,S
                 
                 if (j==1 && matrixValues[l][i] !=0){
 
-                    //System.out.print(matrixValues[l][i]);
-                    //if (matrixValues[l][i]==){}
-                    //System.out.print(getPlayerChar(getPlayerTurn()));
-                    //String[][] matrixChar = new String[MatrixSize][MatrixSize];
-                    //matrixChar[l][i]= getPlayerChar(getPlayerTurn());
-                    //System.out.print(matrixChar[l][i]);
                     String a = playerMatrixMap.get(matrixValues[l][i]);
                     System.out.print(a);
 
@@ -362,7 +260,6 @@ public void createRowBar(int MatrixSize)
 {
 
     int row = MatrixSize;
-    //System.out.print("  ");
     if (MatrixSize<10){
         System.out.print("  ");
     }
@@ -426,8 +323,7 @@ public Boolean checkWin(int winSeq,int[][] matrixValues, int MatrixSize,Map<Inte
     {
         return true;
     }
-   // Boolean horizontalReturn = horizontal(MatrixSize, matrixValues, winSeq, playerMatrixMap);
-
+   
     else if (verticalReturn==false)
     {
         Boolean horizontalReturn = horizontal(MatrixSize, matrixValues, winSeq, playerMatrixMap);
@@ -475,8 +371,6 @@ public Boolean checkWin(int winSeq,int[][] matrixValues, int MatrixSize,Map<Inte
 public Boolean vertical(int MatrixSize, int[][] matrixValues,int winSeq, Map<Integer, String> playerMatrixMap)
 {
     int counterForWinCheckVertical = 0;
-    //String winnerPlayer ="";
-    //System.out.println("in vertical");
     for (int i=0;i<MatrixSize;i++)
     {
         for (int j=0;j<MatrixSize;j++)
@@ -484,17 +378,12 @@ public Boolean vertical(int MatrixSize, int[][] matrixValues,int winSeq, Map<Int
             
             if(j!=MatrixSize-1)
             {
-                if (matrixValues[j][i]==matrixValues[j+1][i] && matrixValues[j][i]!=0 /* && matrixValues[j][i+1]!=0 */)
+                if (matrixValues[j][i]==matrixValues[j+1][i] && matrixValues[j][i]!=0 )
                 {
                     counterForWinCheckVertical++;
-                    //System.out.println(j+" "+i);
-                    //int column=j+1;
-                    //System.out.println(column +" "+ i);
                     if (counterForWinCheckVertical==(winSeq-1))
                     {
                         winnerPlayer=playerMatrixMap.get(matrixValues[j][i]);
-                        //System.out.print(winnerPlayer); //to be deleted later
-                        //System.out.print(counterForWinCheckVertical); //to be deleted later
                         return true;
                     }
                 
@@ -509,7 +398,6 @@ public Boolean vertical(int MatrixSize, int[][] matrixValues,int winSeq, Map<Int
         }
         counterForWinCheckVertical =0;
     }
-    //System.out.println(counterForWinCheckVertical);
     return false;
 
 }
@@ -517,8 +405,6 @@ public Boolean vertical(int MatrixSize, int[][] matrixValues,int winSeq, Map<Int
 public Boolean horizontal(int MatrixSize, int[][] matrixValues,int winSeq, Map<Integer, String> playerMatrixMap)
 {
     int counterForWinCheck = 0;
-    //String winnerPlayer ="";
-    //System.out.println("in horizontal");
     for (int i=0;i<MatrixSize;i++)
     {
         for (int j=0;j<MatrixSize;j++)
@@ -526,13 +412,12 @@ public Boolean horizontal(int MatrixSize, int[][] matrixValues,int winSeq, Map<I
 
             if (j!=MatrixSize-1)
             {
-                if (matrixValues[i][j]==matrixValues[i][j+1] && matrixValues[i][j]!=0 /* && matrixValues[j][i+1]!=0 */)
+                if (matrixValues[i][j]==matrixValues[i][j+1] && matrixValues[i][j]!=0 )
                 {
                     counterForWinCheck++;
                     if (counterForWinCheck==(winSeq-1))
                     {
                         winnerPlayer=playerMatrixMap.get(matrixValues[i][j]);
-                        //System.out.print(winnerPlayer);
                         return true;
                     }
                 
@@ -547,7 +432,6 @@ public Boolean horizontal(int MatrixSize, int[][] matrixValues,int winSeq, Map<I
         }
         counterForWinCheck =0;
     }
-    //System.out.print(counterForWinCheck);
     return false;
     
 }
@@ -555,26 +439,20 @@ public Boolean horizontal(int MatrixSize, int[][] matrixValues,int winSeq, Map<I
 public Boolean diagonalright(int MatrixSize, int[][] matrixValues,int winSeq, Map<Integer, String> playerMatrixMap)
 {
     int counterForWinCheckForDiagonal = 0;
-    //String winnerPlayer ="";
-    //System.out.println("in Diagonal top to bottom");
-
+    
     for (int i=MatrixSize-2;i>=0;i--)
     {
         int row=i;
         int column=0;
         for(row = i; row<=MatrixSize-1 ;row++){
 
-            //System.out.println(row + " " + column);
             if(row!=MatrixSize-1){
-                if (matrixValues[row][column]==matrixValues[row+1][column+1] && matrixValues[row][column]!=0 /* && matrixValues[j][i+1]!=0 */)
+                if (matrixValues[row][column]==matrixValues[row+1][column+1] && matrixValues[row][column]!=0 )
                     {
                         counterForWinCheckForDiagonal++;
-                        //System.out.print(matrixValues[row][column] + "    " + matrixValues[row+1][column+1]);
                         if (counterForWinCheckForDiagonal==(winSeq-1))
                         {
                             winnerPlayer=playerMatrixMap.get(matrixValues[row][column]);
-                            //System.out.print(winnerPlayer);
-                            //System.out.println(counterForWinCheckForDiagonal);
                             return true;
                         }
                 
@@ -595,15 +473,13 @@ public Boolean diagonalright(int MatrixSize, int[][] matrixValues,int winSeq, Ma
         int column=i;
         for(column = i; column<=MatrixSize-1 ;column++){
 
-            //System.out.println(row + " " + column);
             if(column!=MatrixSize-1){
-                if (matrixValues[row][column]==matrixValues[row+1][column+1] && matrixValues[row][column]!=0 /* && matrixValues[j][i+1]!=0 */)
+                if (matrixValues[row][column]==matrixValues[row+1][column+1] && matrixValues[row][column]!=0 )
                     {
                         counterForWinCheckForDiagonal++;
                         if (counterForWinCheckForDiagonal==(winSeq-1))
                         {
                             winnerPlayer=playerMatrixMap.get(matrixValues[row][column]);
-                            //System.out.print(winnerPlayer);
                             return true;
                         }
                 
@@ -620,15 +496,12 @@ public Boolean diagonalright(int MatrixSize, int[][] matrixValues,int winSeq, Ma
     
 
 
-    //System.out.print(counterForWinCheckForDiagonal);
     return false;
 }
 
 public Boolean diagonalLeft(int MatrixSize, int[][] matrixValues, int winSeq, Map<Integer, String> playerMatrixMap)
 {  
     int counterForWinCheckForDiagonalLeft = 0;
-    //String winnerPlayer ="";
-    //System.out.println("in Diagonal bottom to top");
     
 
     for (int i=MatrixSize-1;i>=0;i--)
@@ -637,15 +510,13 @@ public Boolean diagonalLeft(int MatrixSize, int[][] matrixValues, int winSeq, Ma
         int column=i;
         for(row = 0; row<MatrixSize-1 ;row++){
 
-            //System.out.println(row + " " + column);
             if(row!=MatrixSize-1 && column!=0){
-                if (matrixValues[row][column]==matrixValues[row+1][column-1] && matrixValues[row][column]!=0 /* && matrixValues[j][i+1]!=0 */)
+                if (matrixValues[row][column]==matrixValues[row+1][column-1] && matrixValues[row][column]!=0)
                     {
                         counterForWinCheckForDiagonalLeft++;
                         if (counterForWinCheckForDiagonalLeft==(winSeq-1))
                         {
                             winnerPlayer=playerMatrixMap.get(matrixValues[row][column]);
-                            //System.out.print(winnerPlayer);
                             return true;
                         }
                 
@@ -668,16 +539,14 @@ public Boolean diagonalLeft(int MatrixSize, int[][] matrixValues, int winSeq, Ma
         int column=0;
         for(column = MatrixSize-1; column>=1 ;column--){
 
-            //System.out.println(row + " " + column);
+            
             if(row!=MatrixSize-1){
-                //System.out.println(row + " " + column);
-                if (matrixValues[row][column]==matrixValues[row+1][column-1] && matrixValues[row][column]!=0 /* && matrixValues[j][i+1]!=0 */)
+                if (matrixValues[row][column]==matrixValues[row+1][column-1] && matrixValues[row][column]!=0 )
                     {
                         counterForWinCheckForDiagonalLeft++;
                         if (counterForWinCheckForDiagonalLeft==(winSeq-1))
                         {
                             winnerPlayer=playerMatrixMap.get(matrixValues[row][column]);
-                            //System.out.print(winnerPlayer);
                             return true;
                         }
                 
@@ -697,7 +566,6 @@ public Boolean diagonalLeft(int MatrixSize, int[][] matrixValues, int winSeq, Ma
     
 
 
-    //System.out.print(counterForWinCheckForDiagonalLeft);
     return false;
     
 }
@@ -740,12 +608,9 @@ public void save(int size, int winSeq, int players , int[][] matrixValues) throw
     System.out.print("enter name of file: ");
     Scanner sc = new Scanner(System.in);
     String file = sc.nextLine();
-        //FileWriter fw = new FileWriter(file + ".txt");
-        //String strs[] = { "com", "exe", "doc" };
     StringBuilder builder = new StringBuilder();
 
     builder.append(size +"");
-    //builder.append(":");
     builder.append("\n");
     builder.append(winSeq +"");
     builder.append("\n");
@@ -759,11 +624,9 @@ public void save(int size, int winSeq, int players , int[][] matrixValues) throw
             if(j < size - 1){
                 builder.append(",");
             }
-                //fw.write(matrixValues[i][j]+",");
-                    
-                //matrixValues[i][j]=0;
+                
         }
-            //fw.write("\n");
+            
         builder.append("\n");
     }
     
@@ -772,10 +635,10 @@ public void save(int size, int winSeq, int players , int[][] matrixValues) throw
     while(new File(file+".txt").exists()){
 
         System.out.print("Do You want to overWrite the file?: ");
-        //String ovr = sc.nextLine();
+       
 
         if(sc.hasNext("Y") || sc.hasNext("y") ){
-            //file = sc.nextLine();
+            
             sc.next();
             break;
         }
@@ -783,19 +646,11 @@ public void save(int size, int winSeq, int players , int[][] matrixValues) throw
             sc.next();
             System.out.print("Please Re-enter the file name: ");
             file = scan.nextLine();
-            // if(new File(file+".txt").exists()){
-            //     continue;
-            // }
-            // else{break;}
+            
         }
-        // else{
-        //     continue;
-        // }
-
-        // System.out.print("File already Exists, Please reenter name of file: ");
-        // file = sc.nextLine();
+        
     }
-    //System.out.print("done");
+    
     BufferedWriter writer = new BufferedWriter(new FileWriter(file+ ".txt"));
     writer.write(builder.toString());
     writer.close();
@@ -818,14 +673,8 @@ public void newGame(int size, int winSeq, int players, Map<Integer, String> play
             scan.next();
             flag = false;
         }
-        //scan.next();
         System.out.print("Please re-enter the correct Size of grid in single numeric entry: " );
     }
-    //size = scan.nextInt();
-    // while(size<=0 || size >999){
-    //     System.out.print("Please Enter the Size of grid in number: " );
-    //     size = scan.nextInt();
-    // }
     System.out.println();
 
     System.out.print("Enter the number of players: ");
@@ -834,15 +683,8 @@ public void newGame(int size, int winSeq, int players, Map<Integer, String> play
             scan.next();
             flag = false;
         }
-        //scan.next();
         System.out.print("Please Re-enter the correct number of players: " );
     }
-    //players = scan.nextInt();
-    // while(players<1 || players >26){
-    //     scan.next();
-    //     System.out.print("Please Enter the number of players in number: " );
-    //     players = scan.nextInt();
-    // }
     System.out.println();
 
     System.out.print("Please Enter the Win Sequence: ");
@@ -851,15 +693,9 @@ public void newGame(int size, int winSeq, int players, Map<Integer, String> play
             scan.next();
             flag = false;
         }
-        //scan.next();
         System.out.print("Please Re-enter the correct Win Sequence: " );
     }
-    //winSeq = scan.nextInt();
-    // while(winSeq>size || winSeq <=0 ){
-    //     System.out.print("Please Enter the correct Win Sequence: " );
-    //     winSeq = scan.nextInt();
-    // }
-
+    
     System.out.println();
     int[][] matrixValues = new int[size][size];
                 
@@ -885,38 +721,25 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
     Scanner sc = new Scanner(System.in);
     
     String file1 = sc.nextLine();
-        //String savedGameFile = /*...*/;
-            //int[][] board = new int[9][9];
     BufferedReader reader = null;
     FileReader fr = null;
-    //fr = new FileReader(file1 + ".txt");
     while(!new File(file1+".txt").exists()){
     System.out.print("File does not exist. Please re-enter name of file: ");
     file1 = sc.nextLine();
-    //fr = new FileReader(file1+".txt");
     }
     fr = new FileReader(file1+".txt");
     reader = new BufferedReader(fr);
     try{
         String line = "";
         int row = 0;
-        //int sizeNew=0;
-        //int newWinSeq=0;
-        //int newPlayer=0;
         size = Integer.parseInt(reader.readLine());
         winSeq = Integer.parseInt(reader.readLine());
         players = Integer.parseInt(reader.readLine());
         int[][] matrixValues = new int[size][size];
         while((line = reader.readLine()) != null)
         {   
-            //String[] cola = line.split("");
-            //int col1=0;
-            //int row1=0;
-            // for(String b : cola){
-            //     sizeNew = Integer.parseInt(b);
-            // }
-
-            String[] cols = line.split(","); //note that if you have used space as separator you have to split on " "
+            
+            String[] cols = line.split(","); 
             int col = 0;
             
             for(String  c : cols)   
@@ -940,58 +763,12 @@ public void resumeGame(int size, int players, int winSeq, Map<Integer, String> p
 
 public Boolean quitCheck(int size, int winSeq, int players, int[][] matrixValues, String tempPlayerChar) throws Exception{
     Scanner sc = new Scanner(System.in);
-    //while(!sc.hasNextInt()){
         if(sc.hasNext("q") || sc.hasNext("Q")) {
-            //quit(size, winSeq, players, matrixValues);
             return true;
-            //System.out.print("bye");
-            //System.exit(0);
-            
-            // sc.next();
-            // System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space: ");
         }
         else{
             return false;
         }
-            //return false;
-
-        //sc.next();
-        //System.out.print("Player (" + tempPlayerChar + ") enter the position of play(row and column number) seperated by a space or Q to quit: ");
-        
-    //}
-    //return false;
 }
 
 }
-
-/*
-System.out.print("Do you want to overwrite the Existing File?(Y/N) ");
-        while(!sc.hasNext()){
-            System.out.print("Do you want to overwrite the Existing File?(Y/N) ");
-            sc.next();
-        }
-         while(sc.hasNext())
-        {
-            if(sc.hasNext("Y") || sc.hasNext("y"))
-            {
-                break;
-            
-            }
-            else if( sc.hasNext("N") || sc.hasNext("n"))
-            {
-                System.out.print("Please reenter name of file: ");
-                //sc.next();
-                file = sc.nextLine();
-            }
-            else
-            {
-                System.out.print("Please reenter name of file: ");
-                //sc.next();
-                file = sc.nextLine();
-            }
-        }*/
-
-
-
-
-
